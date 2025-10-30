@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Contador</title>
+    <style>
+        /* Importa uma fonte bonita para o texto */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        /* Importa uma fonte "estilo relógio" */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #12121e; /* Fundo bem escuro (quase preto, levemente roxo) */
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Esconde barras de rolagem */
+        }
+
+        /* O "card" do contador */
+        .contador-container {
+            /* O gradiente "misturado" de roxo e rosa escuro */
+            background: linear-gradient(135deg, #2a0c2f, #4d0b38); 
+            padding: 40px 50px;
+            border-radius: 20px; /* Cantos mais arredondados */
+            text-align: center;
+            /* Sombra suave + um "brilho" roxo para destacar */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 35px rgba(139, 47, 153, 0.2);
+            width: 90%;
+            max-width: 450px; /* Limite de largura */
+            border: 1px solid #5a2a63; /* Borda sutil roxa */
+        }
+
+        /* O texto acima */
+        .contador-texto {
+            font-size: 1.1em;
+            font-weight: 300;
+            color: #f0e6ff; /* Um roxo bem clarinho (lavanda) */
+            margin-bottom: 25px; 
+            line-height: 1.5;
+        }
+
+        /* Área dos dias */
+        .contador-dias {
+            display: flex;
+            justify-content: center;
+            align-items: baseline; /* Alinha os textos pela base */
+            gap: 15px; /* Espaço entre o número e o texto "dias" */
+            color: #ff69b4; /* Cor Rosa "sozinha" e vibrante */
+            margin-bottom: 15px;
+        }
+        
+        /* O NÚMERO de dias */
+        #dias-contados {
+            font-size: 5.5em; /* Número bem grande */
+            font-weight: 900; /* Super negrito */
+            line-height: 1;
+        }
+
+        /* O texto "dias" */
+        .dias-label {
+            font-size: 1.5em;
+            font-weight: 300;
+            /* Cor Roxo/Lavanda "sozinha" */
+            color: #e6e6fa; 
+            padding-bottom: 5px;
+        }
+
+        /* Linha separadora */
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #c792ea, rgba(0, 0, 0, 0));
+            margin-bottom: 25px;
+        }
+
+        /* O Relógio (Horas, Minutos, Segundos) */
+        .contador-tempo-real {
+            font-family: 'Orbitron', monospace; /* Fonte estilo relógio digital */
+            font-size: 2.8em;
+            color: #c792ea; /* Cor Roxo "sozinha" e brilhante */
+            display: flex;
+            justify-content: center;
+        }
+
+        .tempo-segmento {
+            min-width: 2.2ch; /* Garante espaço para 2 dígitos (evita que o layout "pule") */
+            text-align: center;
+        }
+
+        .tempo-separador {
+            margin: 0 5px;
+            /* Efeito de piscar nos dois pontos */
+            animation: piscar 1s infinite;
+        }
+        
+        /* Animação para os dois pontos piscarem */
+        @keyframes piscar {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* --- NOVO: Botão Sair --- */
+        .botao-sair {
+            position: fixed; /* Fica fixo na tela */
+            top: 20px;       /* 20px do topo */
+            right: 20px;     /* 20px da direita */
+            
+            background-color: #e74c3c; /* Um vermelho forte */
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none; /* Tira o sublinhado do link */
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .botao-sair:hover {
+            background-color: #c0392b; /* Vermelho mais escuro ao passar o mouse */
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+            transform: translateY(-2px); /* Leve pulo */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- NOVO: Botão Sair -->
+    <!-- Ele aponta para o novo arquivo: "pagina_saida.html" -->
+    <a href="index.html" class="botao-sair">Sair</a>
+
+    <!-- HTML - A Estrutura -->
+    <div class="contador-container">
+        
+        <p class="contador-texto">
+            Estamos desde o dia 04/09 conversando, temos atualmente...
+        </p>
+        
+        <!-- Contador de Dias -->
+        <div class="contador-dias">
+            <span id="dias-contados">...</span>
+            <span class="dias-label">dias</span>
+        </div>
+
+        <!-- Linha divisória decorativa -->
+        <hr>
+
+        <!-- Relógio em Tempo Real -->
+        <div class="contador-tempo-real">
+            <span id="horas" class="tempo-segmento">00</span>
+            <span class="tempo-separador">:</span>
+            <span id="minutos" class="tempo-segmento">00</span>
+            <span class="tempo-separador">:</span>
+            <span id="segundos" class="tempo-segmento">00</span>
+        </div>
+
+    </div>
+
+    <!-- JavaScript - O Cérebro (Agora com relógio!) -->
+    <script>
+        
+        // Função auxiliar para adicionar um zero à esquerda (ex: 7 vira "07")
+        function formatarNumero(num) {
+            return num.toString().padStart(2, '0');
+        }
+
+        // Função principal que atualiza TUDO (dias e relógio)
+        function atualizarContador() {
+            
+            // --- Parte 1: Calcular os Dias ---
+            // (Esta lógica é a mesma, e funciona perfeitamente para virar à meia-noite)
+            
+            const dataInicio = new Date(2025, 8, 4); // 8 = Setembro (meses começam do 0)
+            const dataHoje = new Date(); // Pega a data e hora EXATA de agora
+
+            // Usamos UTC para um cálculo de "dias cheios" sem se preocupar com fuso-horário de verão/inverno
+            const inicioUTC = Date.UTC(dataInicio.getFullYear(), dataInicio.getMonth(), dataInicio.getDate());
+            const hojeUTC = Date.UTC(dataHoje.getFullYear(), dataHoje.getMonth(), dataHoje.getDate());
+            
+            const msPorDia = 1000 * 60 * 60 * 24;
+            const diferencaDias = Math.floor((hojeUTC - inicioUTC) / msPorDia);
+
+            // Atualiza os dias no HTML
+            document.getElementById('dias-contados').innerText = diferencaDias;
+
+            // --- Parte 2: Calcular o Tempo Real (Relógio) ---
+            // (Esta parte usa a "dataHoje" que pegamos ali em cima)
+            
+            const horas = formatarNumero(dataHoje.getHours());
+            const minutos = formatarNumero(dataHoje.getMinutes());
+            const segundos = formatarNumero(dataHoje.getSeconds());
+
+            // Atualiza o relógio no HTML
+            document.getElementById('horas').innerText = horas;
+            document.getElementById('minutos').innerText = minutos;
+            document.getElementById('segundos').innerText = segundos;
+        }
+
+        // Roda a função a cada 1000ms (1 segundo)
+        // Isso é o que faz o relógio "andar"
+        setInterval(atualizarContador, 1000);
+
+        // Roda a função uma vez imediatamente ao carregar a página
+        // para que o usuário não veja "..." e "00:00:00" por 1 segundo
+        atualizarContador();
+
+    </script>
+
+</body>
+</html>
