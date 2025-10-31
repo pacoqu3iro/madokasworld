@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Aba de Links</title>
+    <!-- Importando o Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Importando a fonte Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Aplicando a fonte Inter como padrão */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+               /* --- NOVO: Botão Sair --- */
+               .botao-sair {
+            position: fixed; /* Fica fixo na tela */
+            top: 20px;       /* 20px do topo */
+            right: 20px;     /* 20px da direita */
+            
+            background-color: #e74c3c; /* Um vermelho forte */
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none; /* Tira o sublinhado do link */
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .botao-sair:hover {
+            background-color: #c0392b; /* Vermelho mais escuro ao passar o mouse */
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+            transform: translateY(-2px); /* Leve pulo */
+        }
+
+    </style>
+    <script>
+        // Configuração customizada do Tailwind para adicionar suas cores
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rosa-pastel': '#FFDDF4', // Rosa Pastel
+                        'roxo-custom': '#6A0DAD', // Roxo
+                        'violeta-custom': '#8F00FF', // Violeta
+                        'amarelo-custom': '#FFD700', // Amarelo
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-black text-white flex items-center justify-center min-h-screen p-4">
+    <a href="index.html" class="botao-sair">Sair</a>
+
+    <!-- Container Principal -->
+    <div class="w-full max-w-md bg-gray-900 border-2 border-violeta-custom rounded-2xl p-8 shadow-lg shadow-violeta-custom/20 text-center">
+        
+        <!-- 1. Imagem -->
+        <img 
+            src="https://placehold.co/150x150/FFDDF4/6A0DAD?text=Sua+Foto" 
+            alt="Imagem da Skin (futuramente)" 
+            class="w-36 h-36 rounded-full mx-auto mb-6 border-4 border-rosa-pastel shadow-md"
+            onerror="this.src='https://placehold.co/150x150/FFDDF4/6A0DAD?text=Erro'"
+        >
+
+        <!-- 2. Botão de Toggle -->
+        <button 
+            id="toggleButton" 
+            class="w-full bg-gradient-to-r from-roxo-custom to-violeta-custom text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md hover:shadow-lg hover:shadow-violeta-custom/40 focus:outline-none focus:ring-2 focus:ring-rosa-pastel focus:ring-opacity-75 transition-all duration-300 ease-in-out transform hover:scale-105"
+        >
+            ✨ Skin 1!
+        </button>
+
+        <!-- 3. Caixa de Links (Inicialmente oculta) -->
+        <div id="linksBox" class="hidden mt-6 bg-white rounded-lg p-6 text-left shadow-inner">
+            
+            <!-- Texto personalizável acima dos links -->
+            <h3 class="text-xl font-bold text-center text-roxo-custom mb-2">
+                Nome da Skin
+            </h3>
+            <p class="text-center text-gray-700 mb-5 border-b-2 border-amarelo-custom pb-4">
+                Link dos itens abaixo (Ainda não funcionam!)
+            </p>
+            <p class="text-center text-gray-700 mb-5 border-b-2 border-amarelo-custom pb-4">
+                Valor : 0 Robux
+            </p>
+
+            <!-- Lista de Links -->
+            <div class="space-y-3">
+                <a href="#" target="_blank" class="block w-full bg-gray-100 hover:bg-rosa-pastel text-violeta-custom font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center">
+                    Cabelo
+                </a>
+                <a href="#" target="_blank" class="block w-full bg-gray-100 hover:bg-rosa-pastel text-violeta-custom font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center">
+                    Camisa
+                </a>
+                <a href="#" target="_blank" class="block w-full bg-gray-100 hover:bg-rosa-pastel text-violeta-custom font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center">
+                    Calça
+                </a>
+                <a href="#" target="_blank" class="block w-full bg-gray-100 hover:bg-rosa-pastel text-violeta-custom font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center">
+                    Acessório
+                </a>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- JavaScript para funcionalidade do botão -->
+    <script>
+        // Espera o documento carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Seleciona o botão e a caixa de links pelos IDs
+            const toggleButton = document.getElementById('toggleButton');
+            const linksBox = document.getElementById('linksBox');
+
+            // Adiciona um "ouvidor" de clique ao botão
+            toggleButton.addEventListener('click', () => {
+                // Alterna a classe 'hidden' na caixa de links
+                // 'hidden' no Tailwind significa 'display: none'
+                linksBox.classList.toggle('hidden');
+
+                // Bônus: Muda o texto do botão baseado se a caixa está visível
+                if (linksBox.classList.contains('hidden')) {
+                    toggleButton.innerHTML = 'Links dos itens!✨'; // Texto quando fechado
+                } else {
+                    toggleButton.innerHTML = 'Fechar esta skin'; // Texto quando aberto
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
